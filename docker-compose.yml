@@ -1,0 +1,10 @@
+version:
+services:
+  bin:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5555:5555"
+    volumes:
+      - ./files:/app/files
