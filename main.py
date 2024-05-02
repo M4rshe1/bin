@@ -31,6 +31,9 @@ async def root(request: Request):
     if 'file' not in body:
         return {"error": "file parameter is required"}
 
+    if len(body['file']) < 10:
+        return {"error": "file is too short"}
+
     file = body['file']
     filename = body.get("filename", "file.txt")
 
