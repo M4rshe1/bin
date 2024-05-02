@@ -1,13 +1,15 @@
 from fastapi import FastAPI
 from fastapi import Request
 from hashlib import sha256
+from dotenv import load_dotenv
 import os
-
 from starlette.responses import PlainTextResponse
 
+load_dotenv()
 app = FastAPI()
 
 TOKEN = os.getenv("TOKEN")
+print(TOKEN)
 
 
 @app.get("/")
