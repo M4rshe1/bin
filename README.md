@@ -1,4 +1,4 @@
-# M4rshel\bin
+# M4rshel\codeBin
 
 This is a small project that makes it possible to share text based files on the internet via a automatic generated.
 You only have to send the files content to the server and you will get a link to the file.
@@ -6,7 +6,7 @@ You only have to send the files content to the server and you will get a link to
 ## Command
 
 ```shell
-bin [-path <String>] [-rm <String>] [-ls] [-token <String>] [-serverURI <String>]
+cb [-path <String>] [-rm <String>] [-ls] [-token <String>] [-serverURI <String>]
 ```
 
 ### Options
@@ -24,7 +24,7 @@ All the optional arguments are already defined in the function itself and the pa
 ## Rest API
 
 When you have to provide a fileid, you can use the full fileid or only the first 10 characters of the fileid.  
-So every where it is shown with one of them, you can use both.
+So everywhere it is shown with one of them, you can use both.  
 **Full name**
 ```text
 99RNEH7OD7-index.html

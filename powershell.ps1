@@ -1,5 +1,4 @@
-
-function bin
+function cb
 {
     param(
         [string]$path = "",
