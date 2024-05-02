@@ -3,14 +3,14 @@ function bin
 {
     param(
         [string]$path = "",
-        [Switch]$rm,
+        [string]$rm,
         [Switch]$ls,
         [String]$token = "laskjdflaskjdfhalskdjfhlaksdjfhlkasjsdliksdehbuioerr",
         [String]$serverURI = "https://bin.heggli.dev"
     )
     if ($rm) {
-        if ($path -eq "") {
-            Write-Host "No fileid provided"
+        if ($rm -eq "") {
+            Write-Host "No fileid provided" -ForegroundColor Red
             return
         }
 
@@ -20,7 +20,7 @@ function bin
         $body = @{
             token = $token
         }
-        Invoke-RestMethod -Uri "$($serverURI)/$($path)?token=$($token)" -Method Delete -Body $body -Headers $headers
+        Invoke-RestMethod -Uri "$($serverURI)/$($rm)?token=$($token)" -Method Delete -Body $body -Headers $headers
         return
     }
     if ($ls) {
@@ -31,15 +31,14 @@ function bin
         return
     }
     if ($path -eq "") {
-        Write-Host "No path provided"
+        Write-Host "No path provided" -ForegroundColor Red
         return
     }
-    try {
-        $content = Get-Content $path -Raw
-    } catch {
-        Write-Host "File not found"
+    if (-not (Test-Path $path)) {
+        Write-Host "File not found" -ForegroundColor Red
         return
     }
+    $content = Get-Content $path -Raw
     $body = @{
         file = $content
         token = $token
