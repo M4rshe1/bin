@@ -3,6 +3,7 @@ from fastapi import Request
 from hashlib import sha256
 from dotenv import load_dotenv
 import os
+from pydantic import BaseModel
 from starlette.responses import PlainTextResponse
 
 load_dotenv()
@@ -11,18 +12,29 @@ app = FastAPI()
 TOKEN = os.getenv("TOKEN")
 
 
+def body_str_to_dict(body: str):
+    body = body.split("&")
+    body = [x.split("=") for x in body]
+    body = {x[0]: x[1] for x in body}
+    return body
+
+
 @app.post("/")
 async def root(request: Request):
-    if 'token' not in request.query_params:
+    body = await request.body()
+    body = body.decode()
+    body = body_str_to_dict(body)
+
+    if 'token' not in body:
         return {"error": "token parameter is required"}
-    if request.query_params['token'] != TOKEN:
+    if body['token'] != TOKEN:
         return {"error": "invalid token"}
 
-    if "file" not in request.query_params:
+    if 'file' not in body:
         return {"error": "file parameter is required"}
 
-    file = request.query_params["file"]
-    filename = request.query_params["filename"]
+    file = body['file']
+    filename = body.get("filename", "file.txt")
 
     file_hash = sha256(file.encode()).hexdigest()[0:10].upper()
 
@@ -46,7 +58,6 @@ async def root(request: Request):
 
 @app.delete("/{fileid}")
 async def remove_file(request: Request, fileid: str):
-    print(request.query_params)
     if 'token' not in request.query_params:
         return {"error": "token parameter is required"}
     if request.query_params['token'] != TOKEN:
