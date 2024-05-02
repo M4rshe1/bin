@@ -39,7 +39,7 @@ example:
 https://example.com:8080/99RNEH7OD7-index.html
 ```
 
-## Geta file
+## Get file
 
 
 **Request**
