@@ -34,7 +34,12 @@ function bin
         Write-Host "No path provided"
         return
     }
-    $content = Get-Content $path -Raw
+    try {
+        $content = Get-Content $path -Raw
+    } catch {
+        Write-Host "File not found"
+        return
+    }
     $body = @{
         file = $content
         token = $token
