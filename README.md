@@ -51,7 +51,7 @@ accept: application/json
 ```
 
 
-exaplme:
+example:  
 
 
 ```http
@@ -74,7 +74,7 @@ Hello World!
 ## auth
 
 
-You can set a token in the main.py file to secure the upload of files.
+You can set a token in the main.py file to secure the upload of files.  
 
 
 ```python
@@ -83,13 +83,13 @@ TOKEN = "your token"
 
 
 ## CLI Functions
-It is important to set the `token` and `serverURI` in the function for your shell
+It is important to set the `token` and `serverURI` in the function for your shell   
 
-after that the can be added to your shell profile file, for example:
-Powershell: `$PROFILE`
-Bash: `~/.bashrc`
-zsh: `~/.zshrc`
-...
+after that the can be added to your shell profile file, for example:   
+Powershell: `$PROFILE`  
+Bash: `~/.bashrc`  
+zsh: `~/.zshrc`  
+...   
 
 
 
