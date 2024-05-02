@@ -3,7 +3,7 @@ function bin
     param(
         [string]$path
     )
-    $ServerURI = "https://bin.heggli.dev"
+    $serverURI = "https://bin.heggli.dev"
     $token = "laskjdflaskjdfhalskdjfhlaksdjfhlkasjsdliksdehbuioerr"
     $content = Get-Content $path -Raw
     $body = @{
@@ -11,5 +11,5 @@ function bin
         filename = $path.Split("\")[-1].Split("/")[-1]
         token = $token
     }
-    Invoke-RestMethod -Uri $ServerURI -Method Get -Body $body
+    Invoke-RestMethod -Uri $serverURI -Method Get -Body $body
 }
