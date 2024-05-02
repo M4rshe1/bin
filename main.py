@@ -7,7 +7,7 @@ from starlette.responses import PlainTextResponse
 
 app = FastAPI()
 
-TOKEN = "laskjdflaskjdfhalskdjfhlaksdjfhlkasjsdliksdehbuioerr"
+TOKEN = os.getenv("TOKEN")
 
 
 @app.get("/")
@@ -43,6 +43,27 @@ async def root(request: Request):
 
     print(return_link)
     return return_link
+
+
+@app.get("/rm/{fileid}")
+async def remove_file(fileid: str, request: Request):
+    if 'token' not in request.query_params:
+        return {"error": "token parameter is required"}
+    if request.query_params['token'] != TOKEN:
+        return {"error": "invalid token"}
+
+    if not os.path.exists(f"files/{fileid}"):
+        if "-" not in fileid:
+            files = os.listdir("files")
+            for file in files:
+                if file.startswith(fileid):
+                    fileid = file
+                    break
+            else:
+                return {"error": "file not found"}
+
+    os.remove(f"files/{fileid}")
+    return {"message": "file removed"}
 
 
 @app.get("/{fileid}", response_class=PlainTextResponse)

@@ -13,3 +13,17 @@ function bin
     }
     Invoke-RestMethod -Uri $serverURI -Method Get -Body $body
 }
+
+function binrm
+{
+    param(
+        [string]$fileid
+    )
+    $serverURI = "https://bin.heggli.dev/rm/"
+    $serverURI += $fileid
+    $token = "laskjdflaskjdfhalskdjfhlaksdjfhlkasjsdliksdehbuioerr"
+    $body = @{
+        token = $token
+    }
+    Invoke-RestMethod -Uri $serverURI -Method Get -Body $body
+}

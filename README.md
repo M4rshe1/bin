@@ -74,11 +74,11 @@ Hello World!
 ## auth
 
 
-You can set a token in the main.py file to secure the upload of files.  
+You can set a token in the .env file, the token is used to authenticate the user.
 
 
-```python
-TOKEN = "your token"
+```dotenv
+TOKEN=<your token>
 ```
 
 
