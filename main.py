@@ -22,8 +22,7 @@ def body_str_to_dict(body: str):
 @app.post("/")
 async def root(request: Request):
     body = await request.body()
-    body = body.decode()
-    body = body_str_to_dict(body)
+    body = body_str_to_dict(body.decode())
 
     if 'token' not in body:
         return {"error": "token parameter is required"}
