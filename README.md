@@ -6,28 +6,45 @@ You only have to send the files content to the server and you will get a link to
 ## Command
 
 ```shell
-bin [-path <String>] [-rm] [-ls] [-token <String>] [-serverURI <String>]
+bin [-path <String>] [-rm <String>] [-ls] [-token <String>] [-serverURI <String>]
 ```
 
-## Options
+### Options
 
-- `-path <String>`: The path to the file that should be uploaded **Required**
-- `-rm`: Remove a file from the server by providing the fileid in the path argument **Optional**
+- `-path <String>`: The path to the file that should be uploaded **Optional**
+- `-rm <String>`: Remove a file from the server by providing the fileid **Optional**
 - `-ls`: List all files on the server **Optional**
 - `-token <String>`: The token that is used to authenticate the user **Optional**
 - `-serverURI <String>`: The URI of the server **Optional**
 
 
 **Optional**  
-All of the optional arguments are already defined in the function itself and the parameters are only to overwrite the default values or to switch between the functions.
+All the optional arguments are already defined in the function itself and the parameters are only to overwrite the default values or to switch between the functions.
 
-## Upload a file
+## Rest API
+
+When you have to provide a fileid, you can use the full fileid or only the first 10 characters of the fileid.  
+So every where it is shown with one of them, you can use both.
+**Full name**
+```text
+99RNEH7OD7-index.html
+```
+
+**Short name**
+```text
+99RNEH7OD7
+```
+
+### Upload a file
 
 **Request**
 
 ```http
-GET / HTTP/1.1
+POST / HTTP/1.1
 accept: application/json
+token: <token>
+file: <file>
+filename: <filename>
 ```
 
 **Response**
@@ -36,13 +53,13 @@ accept: application/json
 https://<hostname>:<port>/<fileid>
 ```
 
-example:
+**example:**
 
 ```text/plain
 https://example.com:8080/99RNEH7OD7-index.html
 ```
 
-## Get file
+### Get file
 
 **Request**
 
@@ -51,17 +68,13 @@ GET /<fileid> HTTP/1.1
 accept: application/json
 ```
 
-example:
+**example:**
 
 ```http
 GET /99RNEH7OD7-index.html HTTP/1.1
-
-or 
-
-GET /99RNEH7OD7 HTTP/1.1
 ```
 
-## Delete
+### Delete
 
 **Request**
 
@@ -70,18 +83,14 @@ DELETE /<fileid>?token=<token> HTTP/1.1
 accept: application/json
 ```
 
-example:
+**example:**
 
 ```http
-DELETE /99RNEH7OD7-index.html?token=<token> HTTP/1.1
-
-or
-
 DELETE /99RNEH7OD7?token=<token> HTTP/1.1
 ```
 
 
-## List
+### List
 
 **Request**
 
@@ -90,7 +99,7 @@ GET /?ls&token=<token> HTTP/1.1
 accept: application/json
 ```
 
-example:
+**example:**
 
 ```http
 GET /?ls&token=<token> HTTP/1.1
