@@ -9,15 +9,12 @@ load_dotenv()
 app = FastAPI()
 
 TOKEN = os.getenv("TOKEN")
-print(TOKEN)
 
 
-@app.get("/")
+@app.post("/")
 async def root(request: Request):
-    # check if request has parameter file
     if 'token' not in request.query_params:
         return {"error": "token parameter is required"}
-
     if request.query_params['token'] != TOKEN:
         return {"error": "invalid token"}
 
@@ -47,8 +44,9 @@ async def root(request: Request):
     return return_link
 
 
-@app.get("/rm/{fileid}")
-async def remove_file(fileid: str, request: Request):
+@app.delete("/{fileid}")
+async def remove_file(request: Request, fileid: str):
+    print(request.query_params)
     if 'token' not in request.query_params:
         return {"error": "token parameter is required"}
     if request.query_params['token'] != TOKEN:
@@ -68,9 +66,20 @@ async def remove_file(fileid: str, request: Request):
     return {"message": "file removed"}
 
 
+@app.get("/")
+async def list_files(request: Request):
+    if 'token' not in request.query_params:
+        return {"error": "token parameter is required"}
+    if request.query_params['token'] != TOKEN:
+        return {"error": "invalid token"}
+
+    files = os.listdir("files")
+    files = [file for file in files if not file.startswith(".")]
+    return files
+
+
 @app.get("/{fileid}", response_class=PlainTextResponse)
 async def read_item(fileid: str):
-    # check if file exists
     if not os.path.exists(f"files/{fileid}"):
         if "-" not in fileid:
             files = os.listdir("files")
