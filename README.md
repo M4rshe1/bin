@@ -38,7 +38,7 @@ GET /<fileid> HTTP/1.1
 accept: application/json
 ```
 exaplme:
-```
+```http
 GET /99RNEH7OD7-index.html HTTP/1.1
 
 or 
