@@ -1,6 +1,6 @@
 # M4rshel\codeBin
 
-This is a small project that makes it possible to share text based files on the internet via a automatic generated.
+This is a small project that makes it possible to share text based files on the internet via a automatic generated link.
 You only have to send the files content to the server and you will get a link to the file.
 
 ## Command
@@ -20,6 +20,14 @@ cb [-path <String>] [-rm <String>] [-ls] [-token <String>] [-serverURI <String>]
 
 **Optional**  
 All the optional arguments are already defined in the function itself and the parameters are only to overwrite the default values or to switch between the functions.
+
+## Installation
+
+```shell
+sudo docker-compose up -d --build
+```
+
+The api is now available on port `5555`
 
 ## Rest API
 
