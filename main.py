@@ -8,7 +8,7 @@ from starlette.responses import PlainTextResponse
 load_dotenv()
 app = FastAPI()
 
-TOKEN = os.getenv("TOKEN")
+TOKEN = os.getenv("TOKEN").split(",")
 
 
 def body_str_to_dict(body: str):
@@ -25,7 +25,7 @@ async def root(request: Request):
 
     if 'token' not in body:
         return {"error": "token parameter is required"}
-    if body['token'] != TOKEN:
+    if body['token'] not in TOKEN:
         return {"error": "invalid token"}
 
     if 'file' not in body:
