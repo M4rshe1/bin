@@ -43,5 +43,5 @@ function cb
         token = $token
         filename = $path.Split("\")[-1].Split("/")[-1]
     }
-    Invoke-RestMethod -Uri $serverURI -Method Post -Body $body
+    Invoke-RestMethod -Uri $serverURI -Method Get -Body $body -InFile $path
 }

@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from fastapi import Request
+from fastapi import Request, File, UploadFile
 from hashlib import sha256
 from dotenv import load_dotenv
 import os
@@ -60,7 +60,7 @@ async def root(request: Request):
 async def remove_file(request: Request, fileid: str):
     if 'token' not in request.query_params:
         return {"error": "token parameter is required"}
-    if request.query_params['token'] != TOKEN:
+    if request.query_params['token'] not in TOKEN:
         return {"error": "invalid token"}
 
     if not os.path.exists(f"files/{fileid}"):
@@ -81,7 +81,7 @@ async def remove_file(request: Request, fileid: str):
 async def list_files(request: Request):
     if 'token' not in request.query_params:
         return {"error": "token parameter is required"}
-    if request.query_params['token'] != TOKEN:
+    if request.query_params['token'] not in TOKEN:
         return {"error": "invalid token"}
 
     files = os.listdir("files")
