@@ -6,7 +6,7 @@ import os
 from starlette.responses import PlainTextResponse
 
 load_dotenv()
-app = FastAPI()
+app = FastAPI(debug=True)
 
 TOKEN = os.getenv("TOKEN").split(",")
 
@@ -15,14 +15,13 @@ def body_str_to_dict(body: str):
     body = body.split("&")
     body = [x.split("=") for x in body]
     body = {x[0]: x[1] for x in body}
+
     return body
 
 
-@app.post("/")
+@app.get("/")
 async def root(request: Request):
-    body = await request.body()
-    body = body_str_to_dict(body.decode())
-
+    body = request.query_params
     if 'token' not in body:
         return {"error": "token parameter is required"}
     if body['token'] not in TOKEN:
@@ -78,7 +77,7 @@ async def remove_file(request: Request, fileid: str):
     return {"message": "file removed"}
 
 
-@app.get("/")
+@app.get("/ls")
 async def list_files(request: Request):
     if 'token' not in request.query_params:
         return {"error": "token parameter is required"}
@@ -104,4 +103,5 @@ async def read_item(fileid: str):
 
     with open(f"files/{fileid}", "rb") as f:
         file = f.read()
+
     return file.decode()
